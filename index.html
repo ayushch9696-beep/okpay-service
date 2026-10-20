@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKPay</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* General styling for input icons */
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .input-group img.custom-input-icon {
+            position: absolute;
+            left: 16px;
+            width: 36px;   
+            height: 36px;  
+            object-fit: contain;
+            opacity: 0.8 !important;
+        }
+        
+        /* Login PIN icon specific styling */
+        .input-group img.pin-icon {
+            width: 44px !important;
+            height: 44px !important;
+            left: 12px !important;
+            opacity: 0.8 !important;
+        }
+
+        /* Register screen specific line-style icons styling */
+        .input-group img.reg-custom-icon {
+            position: absolute;
+            left: 16px;
+            width: 26px;   
+            height: 26px;  
+            object-fit: contain;
+            opacity: 0.8 !important;
+        }
+
+        /* Register PIN icon */
+        .input-group img.reg-pin-icon {
+            width: 46px !important;
+            height: 46px !important;
+            left: 10px !important;
+            opacity: 0.8 !important;
+        }
+
+        .input-group input {
+            padding-left: 70px !important; 
+        }
+
+        /* +91 Country Code Green Styling for Register screen */
+        .phone-input-wrapper .country-code {
+            color: #1b8a4a !important;
+            font-weight: 600;
+        }
+
+        /* Spinner CSS for Loading Animation matching Forgot Screen */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+
+        /* Splash screen smooth transition */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= SPLASH / INTRO ANIMATION SCREEN ================= -->
+    <div id="splash-screen">
+        <img src="https://i.ibb.co/Wd88ZjH/IMG-20261013-152434.jpg" alt="Splash Background" class="splash-bg-img">
+        
+        <div class="splash-card-wrapper">
+            <img src="https://i.ibb.co/ksMmCXQY/card-1.png" alt="OKPAY Card" class="base-card">
+            <img src="https://i.ibb.co/jkJ4JJFj/1209a6350403417383485a5014ad455d-1.png" alt="Overlay Image" class="overlay-img">
+        </div>
+    </div>
+
+    <div class="phone-container">
+        
+        <!-- ================= LOGIN SCREEN ================= -->
+        <div id="login-screen">
+            <div class="logo-box">
+                <img src="https://i.ibb.co/jkJ4JJFj/1209a6350403417383485a5014ad455d-1.png" alt="OKPAY Logo">
+            </div>
+
+            <!-- 1. Phone Input -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/TnH1YQD/user.png" alt="Phone Icon" class="custom-input-icon">
+                <input type="tel" placeholder="Phone" id="login-phone" inputmode="numeric" pattern="[0-9]*" maxlength="10">
+            </div>
+
+            <!-- 2. Password Input -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/1GK7QCT5/lock.png" alt="Lock Icon" class="custom-input-icon">
+                <input type="password" placeholder="Password" id="login-pass">
+            </div>
+
+            <!-- 3. PIN Input -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/TCH9wKx/pin.png" alt="PIN Icon" class="custom-input-icon pin-icon">
+                <input type="password" placeholder="6-digit PIN" id="login-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6">
+            </div>
+
+            <div class="login-options">
+                <a id="nav-to-register">Register</a>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="remember-me">
+                    Remember Me
+                </label>
+            </div>
+
+            <div class="privacy-row">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="privacy-agree" checked>
+                    Agree
+                </label>
+                <a href="privacy.html" target="_blank">"User Privacy Agreement"</a>
+            </div>
+
+            <button class="btn-primary" id="btn-sign-in" type="button">Sign In</button>
+
+            <a href="forgot.html" class="forget-password">Forget Password</a>
+
+            <div class="version-tag">v1.4.4</div>
+        </div>
+
+        <!-- ================= REGISTER SCREEN ================= -->
+        <div id="register-screen" style="display: none;">
+            <div class="reg-header">
+                <i class="fa-solid fa-arrow-left back-btn" id="nav-to-login"></i>
+                <h2>Register</h2>
+            </div>
+
+            <!-- Username -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/fd4vWKXM/user-line.png" alt="User Icon" class="reg-custom-icon">
+                <input type="text" placeholder="User Name" id="reg-username">
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/wF6fWX09/lock-line.png" alt="Lock Icon" class="reg-custom-icon">
+                <input type="password" placeholder="Password" id="reg-pass">
+            </div>
+
+            <!-- PIN -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/bg7HB6L4/20261018-224501.png" alt="PIN Icon" class="reg-custom-icon reg-pin-icon">
+                <input type="password" placeholder="6-digit PIN" id="reg-pin" inputmode="numeric" pattern="[0-9]*" maxlength="6">
+            </div>
+
+            <!-- Phone -->
+            <div class="phone-input-wrapper">
+                <img src="https://i.ibb.co/N25rT2Nq/phone-line.png" alt="Phone Icon" style="width: 26px; height: 26px; object-fit: contain; margin-right: 8px; opacity: 0.8;">
+                <span class="country-code">+91</span>
+                <input type="tel" placeholder="Phone" id="reg-phone" inputmode="numeric" pattern="[0-9]*" maxlength="10">
+            </div>
+
+            <!-- OTP -->
+            <div class="input-group otp-wrapper">
+                <img src="https://i.ibb.co/RGM6KR8L/mail-line.png" alt="Mail Icon" class="reg-custom-icon">
+                <input type="text" placeholder="OTP Code" id="reg-otp">
+                <button class="send-otp-btn" id="btn-send-reg-otp" type="button">Send</button>
+            </div>
+
+            <!-- Invite Code (Pre-filled with 1o1o1o) -->
+            <div class="input-group">
+                <img src="https://i.ibb.co/Nn9ZKx5R/link-line.png" alt="Link Icon" class="reg-custom-icon">
+                <input type="text" placeholder="Invite Code" id="reg-invite" value="1o1o1o">
+            </div>
+
+            <button class="btn-primary" id="btn-sign-up" type="button">Sign Up</button>
+        </div>
+
+        <!-- ================= VERIFICATION MODAL POPUP ================= -->
+        <div class="modal-overlay" id="verification-modal" style="display: none;">
+            <div class="modal-card">
+                <div class="modal-header">
+                    <h3>Login OTP</h3>
+                    <button class="close-modal-btn" id="btn-close-modal" type="button"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <div class="modal-body-text">
+                    Tap Send to receive the OTP, then enter it to confirm this login.
+                </div>
+                <div class="modal-subtext" id="dynamic-otp-text">
+                    OTP will be sent to +91 
+                </div>
+
+                <div class="timer-text" id="modal-timer"></div>
+
+                <div class="input-group otp-wrapper">
+                    <img src="https://i.ibb.co/RGM6KR8L/mail-line.png" alt="Mail Icon" class="reg-custom-icon">
+                    <input type="text" placeholder="Enter 6-digit OTP" id="modal-otp" maxlength="6" inputmode="numeric" pattern="[0-9]*">
+                    <button class="send-otp-btn" id="modal-send-otp-btn" type="button">Send</button>
+                </div>
+
+                <button class="btn-primary" id="btn-confirm-verification" type="button" style="margin-top: 10px;">Confirm</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Ensure splash screen hides properly
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            if(splash) {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                }, 500);
+            }
+        }, 2000);
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
